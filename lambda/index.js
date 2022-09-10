@@ -18,7 +18,7 @@ const getRemoteData = (url) => new Promise((resolve, reject) => {
     request.on('error', (err) => reject(err));
   });
 
-  
+
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -30,7 +30,7 @@ const LaunchRequestHandler = {
         await getRemoteData('https://3f0f-2806-2f0-1141-45a6-d8f7-8270-38df-d21e.ngrok.io').then((response)=> {
             const data = JSON.parse(response)
             speakOutput = 'Algo'+data 
-        }).catch((err) => {speakOutput = "Error request"})
+        }).catch((err) => {speakOutput = JSON.parse(err)})
 
 
 
