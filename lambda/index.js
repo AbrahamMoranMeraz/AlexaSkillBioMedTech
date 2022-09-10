@@ -86,7 +86,7 @@ const FallbackIntentHandler = {
 const CustomIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'ayuda';
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'Ayuda';
     },
     handle(handlerInput) {
         const speakOutput = '¿Que tipo de ayuda necesita?';
