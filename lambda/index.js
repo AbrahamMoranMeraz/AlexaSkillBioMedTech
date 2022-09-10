@@ -19,7 +19,6 @@ const getRemoteData = (url) => new Promise((resolve, reject) => {
   });
 
 
-
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
@@ -42,7 +41,7 @@ const HelloWorldIntentHandler = {
     async handle(handlerInput) {
         let speakOutput;
         
-        await getRemoteData('https://3f0f-2806-2f0-1141-45a6-d8f7-8270-38df-d21e.ngrok.io').then((response)=> {
+        await getRemoteData('https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/switch/10/0').then((response)=> {
             const data = JSON.parse(response)
             speakOutput = 'Algo '+ response 
         }).catch((err) => {speakOutput = console.log("Esto es un error: "+err)})
