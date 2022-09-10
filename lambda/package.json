@@ -1,7 +1,7 @@
 {
-  "name": "hello-world",
+  "name": "apollo-healt-care",
   "version": "1.2.0",
-  "description": "alexa utility for quickly building skills",
+  "description": "alexa utility for application for medical assistance services",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

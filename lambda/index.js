@@ -12,6 +12,15 @@ const LaunchRequestHandler = {
     handle(handlerInput) {
         const speakOutput = 'Hola se activo el sistema de emergencias Apolo si fu un error di Alexa cancela de lo contrario se enviara ayuda lo mas pronto posible';
 
+        const http = require('http')
+        const options = {
+            hostname: 'https://csm-2022.ny-2.paas.massivegrid.net',
+            path: '/hackaton/webresources/com.mim.alerta/switch/12/1'
+        }
+
+        const req = http.request(options, res => {speakOutput += `Status Code ${res.statusCode}`})
+        req.on('error', err => {speakOutput += 'A ocurrido un error inesperado'})
+        req.end();
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(speakOutput)
