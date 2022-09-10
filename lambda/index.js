@@ -10,19 +10,7 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        let speakOutput = '';
-
-        const http = require('http')
-        const options = {
-            hostname: 'localhost',
-            port: 3000,
-            path: '',
-            method: 'GET'
-        }
-
-        const req = http.request(options, res => {speakOutput += 'Exito'})
-        req.on('error', err => {speakOutput += 'A ocurrido un error inesperado'})
-        req.end();
+const speakOutput = "Iniciando Apollo Help Care"
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(speakOutput)
