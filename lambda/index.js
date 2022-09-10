@@ -5,12 +5,37 @@
  * */
 const Alexa = require('ask-sdk-core');
 
+const getRemoteData = function(url) {
+    return new Promise((resolve, reject) => {
+        const client = url.startsWith('https') ? require('https'):require('http')
+        const request = client.get(url, (response) => {
+            if(response.statusCode < 200 || response.statusCode > 299){
+                reject(new Error('Failed with status code: '+response.statusCode))
+            }
+            const body = []
+            response.on('data', (chunk) => body.push(chunk))
+            response.on('error', (err) => reject(err))
+        })
+        request.on('error', (err) => reject(err))
+    })
+}
+
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
-    handle(handlerInput) {
-const speakOutput = "Iniciando Apollo Help Care"
+    async handle(handlerInput) {
+        const speakOutput = "Iniciando Apollo Help Care"
+
+        await getRemoteData('https://3f0f-2806-2f0-1141-45a6-d8f7-8270-38df-d21e.ngrok.io').then((response)=> {
+            const data = JSON.parse(response)
+            speakOutput = data 
+        }).catch((err) => {})
+
+
+
+
+
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(speakOutput)
