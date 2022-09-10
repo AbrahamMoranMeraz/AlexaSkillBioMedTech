@@ -25,12 +25,12 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     async handle(handlerInput) {
-        const speakOutput = "Iniciando Apollo Help Care"
+        let speakOutput = "Iniciando Apollo Help Care"
 
         await getRemoteData('https://3f0f-2806-2f0-1141-45a6-d8f7-8270-38df-d21e.ngrok.io').then((response)=> {
             const data = JSON.parse(response)
             speakOutput = 'Algo'+data 
-        }).catch((err) => {})
+        }).catch((err) => {speakOutput = "Error request"})
 
 
 
