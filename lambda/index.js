@@ -10,7 +10,7 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome, you can say Hello or Help. Which would you like to try?';
+        const speakOutput = 'Hola se activo el sistema de emergencias Apolo si fu un error di Alexa cancela de lo contrario se enviara ayuda lo mas pronto posible';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
