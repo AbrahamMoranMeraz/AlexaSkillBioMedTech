@@ -46,7 +46,7 @@ const HelloWorldIntentHandler = {
     async handle(handlerInput) {
         let speakOutput;
         
-        await getRemoteData('https://3e5b-2806-2f0-1141-45a6-d532-5add-5ee0-46e8.ngrok.io')
+        await getRemoteData('https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/panic/12/0')
       .then((response) => {
         const data = JSON.parse(response);
         speakOutput = `There are currently ${data.people.length} astronauts in space. `;
@@ -104,8 +104,20 @@ const FallbackIntentHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.FallbackIntent';
     },
-    handle(handlerInput) {
-        const speakOutput = 'Sorry, I don\'t know about that. Please try again.';
+    async handle(handlerInput) {
+        let speakOutput = 'Sorry, I don\'t know about that. Please try again.';
+        
+        
+        await getRemoteData('https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/panic/12/1')
+      .then((response) => {
+        const data = JSON.parse(response);
+        speakOutput = `There are currently ${data.people.length} astronauts in space. `;
+      })
+      .catch((err) => {
+        console.log(`ERROR: ${err.message}`);
+        // set an optional error message here
+        speakOutput = err.message;
+      });
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
