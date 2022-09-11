@@ -7,7 +7,7 @@ const Alexa = require('ask-sdk-core');
 
 const getRemoteData = (url) => new Promise((resolve, reject) => {
     const client = url.startsWith('https') ? require('https') : require('http');
-    const request = client.get(url, (response) => {
+    const request = client.post(url, (response) => {
       if (response.statusCode < 200 || response.statusCode > 299) {
         reject(new Error(`Failed with status code: ${response.statusCode}`));
       }
