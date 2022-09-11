@@ -6,12 +6,26 @@
 const Alexa = require('ask-sdk-core');
 // const fetch = require('node-fetch');
 
+const getRemoteData = (url) => new Promise((resolve, reject) => {
+  const client = url.startsWith('https') ? require('https') : require('http');
+  const request = client.get(url, (response) => {
+    if (response.statusCode < 200 || response.statusCode > 299) {
+      reject(new Error(`Failed with status code: ${response.statusCode}`));
+    }
+    const body = [];
+    response.on('data', (chunk) => body.push(chunk));
+    response.on('end', () => resolve(body.join('')));
+  });
+  request.on('error', (err) => reject(err));
+});
+
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     async handle(handlerInput) {
+        
         let speakOutput = "Iniciando Apollo Help Care"
 
         return handlerInput.responseBuilder
@@ -22,6 +36,8 @@ const LaunchRequestHandler = {
 };
 
 
+
+
 const HelloWorldIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -30,21 +46,17 @@ const HelloWorldIntentHandler = {
     async handle(handlerInput) {
         let speakOutput;
         
-    //     const userAction = async () => {
-    //   const response = await fetch(
-    //     'https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/switch/10/0',
-    //     {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     },
-    //   )
-    //     .then((res) =>  speakOutput = 'Exito')
-    //     .catch((err) => speakOutput =  'Fail');
-    //   // return await response.json(); //extract JSON from the http response
-    //   // do something with myJson
-    // };
+        await getRemoteData('https://3e5b-2806-2f0-1141-45a6-d532-5add-5ee0-46e8.ngrok.io')
+      .then((response) => {
+        const data = JSON.parse(response);
+        speakOutput = `There are currently ${data.people.length} astronauts in space. `;
+      })
+      .catch((err) => {
+        console.log(`ERROR: ${err.message}`);
+        // set an optional error message here
+        speakOutput = err.message;
+      });
+
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
