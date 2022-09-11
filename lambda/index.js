@@ -48,13 +48,15 @@ const SendHelpIntent = {
         
         await getRemoteData('https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/panic/12/1')
       .then((response) => {
-        const data = JSON.parse(response);
-        speakOutput = `There are currently ${data.people.length} astronauts in space. `;
+          speakOutput = "The help is on the way"
+        // const data = JSON.parse(response);
+        // speakOutput = `There are currently ${data.people.length} astronauts in space. `;
       })
       .catch((err) => {
         console.log(`ERROR: ${err.message}`);
+        speakOutput = "Error"
         // set an optional error message here
-        speakOutput = err.message;
+        // speakOutput = err.message;
       });
 
 
@@ -75,13 +77,15 @@ const CancelHelpIntent = {
         
         await getRemoteData('https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/panic/12/0')
       .then((response) => {
-        const data = JSON.parse(response);
-        speakOutput = `There are currently ${data.people.length} astronauts in space. `;
+          speakOutput = "The operation is stoped"
+        // const data = JSON.parse(response);
+        // speakOutput = `There are currently ${data.people.length} astronauts in space. `;
       })
       .catch((err) => {
         console.log(`ERROR: ${err.message}`);
+        speakOutput = "Error"
         // set an optional error message here
-        speakOutput = err.message;
+        // speakOutput = err.message;
       });
 
 
