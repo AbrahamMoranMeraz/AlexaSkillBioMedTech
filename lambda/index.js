@@ -38,10 +38,37 @@ const LaunchRequestHandler = {
 
 
 
-const HelloWorldIntentHandler = {
+const SendHelpIntent = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'SendHelpIntent';
+    },
+    async handle(handlerInput) {
+        let speakOutput;
+        
+        await getRemoteData('https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/panic/12/1')
+      .then((response) => {
+        const data = JSON.parse(response);
+        speakOutput = `There are currently ${data.people.length} astronauts in space. `;
+      })
+      .catch((err) => {
+        console.log(`ERROR: ${err.message}`);
+        // set an optional error message here
+        speakOutput = err.message;
+      });
+
+
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(speakOutput)
+            .getResponse();
+    }
+};
+
+const CancelHelpIntent = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'CancelHelpIntent';
     },
     async handle(handlerInput) {
         let speakOutput;
