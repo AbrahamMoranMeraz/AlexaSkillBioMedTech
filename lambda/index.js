@@ -4,7 +4,7 @@
  * session persistence, api calls, and more.
  * */
 const Alexa = require('ask-sdk-core');
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
 
 
 const LaunchRequestHandler = {
@@ -30,21 +30,21 @@ const HelloWorldIntentHandler = {
     async handle(handlerInput) {
         let speakOutput;
         
-        const userAction = async () => {
-      const response = await fetch(
-        'https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/switch/10/0',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-        .then((res) =>  speakOutput = 'Exito')
-        .catch((err) => speakOutput =  'Fail');
-      // return await response.json(); //extract JSON from the http response
-      // do something with myJson
-    };
+    //     const userAction = async () => {
+    //   const response = await fetch(
+    //     'https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/switch/10/0',
+    //     {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     },
+    //   )
+    //     .then((res) =>  speakOutput = 'Exito')
+    //     .catch((err) => speakOutput =  'Fail');
+    //   // return await response.json(); //extract JSON from the http response
+    //   // do something with myJson
+    // };
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
