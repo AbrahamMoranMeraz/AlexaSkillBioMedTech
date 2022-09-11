@@ -43,8 +43,8 @@ const HelloWorldIntentHandler = {
         
         await getRemoteData('https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/switch/10/0').then((response)=> {
             const data = JSON.parse(response)
-            speakOutput = 'Algo '+ response 
-        }).catch((err) => {speakOutput = console.log("Esto es un error: "+err)})
+            speakOutput = 'Se esta avisando a tus contactos'
+        }).catch((err) => {speakOutput ="Ocurrio un error inesperado", console.log("Esto es un error: "+err)})
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
