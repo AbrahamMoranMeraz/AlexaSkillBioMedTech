@@ -53,8 +53,8 @@ const HelloWorldIntentHandler = {
           },
         },
       )
-        .then((res) => 'Exito')
-        .catch((err) => 'Fail');
+        .then((res) =>  speakOutput = 'Exito')
+        .catch((err) => speakOutput =  'Fail');
       // return await response.json(); //extract JSON from the http response
       // do something with myJson
     };
