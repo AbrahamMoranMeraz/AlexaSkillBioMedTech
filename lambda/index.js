@@ -33,6 +33,8 @@ const LaunchRequestHandler = {
     }
 };
 
+const fetch = require('node-fetch');
+
 const HelloWorldIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -41,10 +43,21 @@ const HelloWorldIntentHandler = {
     async handle(handlerInput) {
         let speakOutput;
         
-        await getRemoteData('https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/switch/10/0').then((response)=> {
-            const data = JSON.parse(response)
-            speakOutput = 'Se esta avisando a tus contactos'
-        }).catch((err) => {speakOutput ="Ocurrio un error inesperado", console.log("Esto es un error: "+err)})
+        const userAction = async () => {
+      const response = await fetch(
+        'https://csm-2022.ny-2.paas.massivegrid.net/hackaton/webresources/com.mim.alerta/switch/10/0',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+        .then((res) => 'Exito')
+        .catch((err) => 'Fail');
+      // return await response.json(); //extract JSON from the http response
+      // do something with myJson
+    };
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
